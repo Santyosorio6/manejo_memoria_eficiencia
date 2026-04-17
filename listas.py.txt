@@ -1,0 +1,26 @@
+import tracemalloc
+
+tracemalloc.start()
+
+with open("ventas_supermercado.csv", "r") as archivo:
+    lineas = archivo.readlines()
+
+datos = [linea.strip().split(",") for linea in lineas[1:]]
+
+ventas_alimentos = []
+
+for fila in datos:
+    categoria = fila[2]
+    precio = float(fila[3])
+    cantidad = int(fila[4])
+
+    if categoria == "Alimentos":
+        ventas_alimentos.append(precio * cantidad)
+
+total = sum(ventas_alimentos)
+
+memoria = tracemalloc.get_traced_memory()[1]
+tracemalloc.stop()
+
+print("Total:", total)
+print("Memoria:", memoria)
