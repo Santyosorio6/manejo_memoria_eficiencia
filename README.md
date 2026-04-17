@@ -1,5 +1,10 @@
 # Manejo de Memoria y Eficiencia en Python
 
+## Integrantes
+- Santiago Meneses Vanegas
+- Santiago Osorio Anaya
+- Maredwin Galindo Lozano
+
 ## Descripción
 Este proyecto tiene como objetivo analizar el manejo de memoria y la eficiencia en programación utilizando Python.
 
