@@ -1,26 +1,34 @@
 import tracemalloc
+import time
 
 tracemalloc.start()
+inicio = time.time()
 
-with open("ventas_supermercado.csv", "r") as archivo:
-    lineas = archivo.readlines()
+archivo = open("ventas_supermercado.csv", "r")
+next(archivo)
 
-datos = [linea.strip().split(",") for linea in lineas[1:]]
+datos = []
 
-ventas_alimentos = []
+for linea in archivo:
+    fila = linea.strip().split(",")
+    datos.append(fila)
+
+archivo.close()
+
+ventas = []
 
 for fila in datos:
-    categoria = fila[2]
-    precio = float(fila[3])
-    cantidad = int(fila[4])
+    if fila[2] == "Alimentos":
+        precio = float(fila[3])
+        cantidad = int(fila[4])
+        ventas.append(precio * cantidad)
 
-    if categoria == "Alimentos":
-        ventas_alimentos.append(precio * cantidad)
+total = sum(ventas)
 
-total = sum(ventas_alimentos)
-
+fin = time.time()
 memoria = tracemalloc.get_traced_memory()[1]
 tracemalloc.stop()
 
 print("Total:", total)
-print("Memoria:", memoria)
+print("Memoria lista:", memoria)
+print("Tiempo:", fin - inicio)
