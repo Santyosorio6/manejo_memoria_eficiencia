@@ -25,5 +25,5 @@ memoria = tracemalloc.get_traced_memory()[1]
 tracemalloc.stop()
 
 print("Total:", total)
-print("Memoria generador:", memoria)
+print("Memoria (MB):", memoria / (1024 * 1024))
 print("Tiempo:", fin - inicio)
