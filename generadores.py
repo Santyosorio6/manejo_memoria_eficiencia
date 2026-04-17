@@ -1,25 +1,29 @@
 import tracemalloc
+import time
 
 tracemalloc.start()
+inicio = time.time()
 
-def generar_ventas():
-    with open("ventas_supermercado.csv", "r") as archivo:
-        next(archivo)
+def calcular_ventas():
+    archivo = open("ventas_supermercado.csv", "r")
+    next(archivo)
 
-        for linea in archivo:
-            fila = linea.strip().split(",")
+    for linea in archivo:
+        fila = linea.strip().split(",")
 
-            categoria = fila[2]
+        if fila[2] == "Alimentos":
             precio = float(fila[3])
             cantidad = int(fila[4])
+            yield precio * cantidad
 
-            if categoria == "Alimentos":
-                yield precio * cantidad
+    archivo.close()
 
-total = sum(generar_ventas())
+total = sum(calcular_ventas())
 
+fin = time.time()
 memoria = tracemalloc.get_traced_memory()[1]
 tracemalloc.stop()
 
 print("Total:", total)
-print("Memoria:", memoria)
+print("Memoria generador:", memoria)
+print("Tiempo:", fin - inicio)
